@@ -1,11 +1,12 @@
 package day1
 
 import cats.effect.IO
-import day1.Part1.{calculateFuel, fuelFromMass}
+import day1.Part1.calculateFuel
 
 import scala.annotation.tailrec
+import scala.io.Source
 
-object Part2 {
+object Part2 extends App {
 
   val path: IO[String] = IO(getClass.getClassLoader.getResource("input.txt").getFile)
 
@@ -17,12 +18,15 @@ object Part2 {
     }
   }
 
-  val printTotalFuel = for {
-    fuelMass  <- fuelFromMass(path)
-    totalFuel <- IO(fuelOfFuel(fuelMass, fuelMass))
-    _         <- IO(println("Part 2: Total Fuel = " + totalFuel))
-  } yield ()
+  def fuelFromMass(filepath: IO[String]) =
+    for {
+      fileString    <- filepath
+      lines         <- IO(Source.fromFile(fileString).getLines())
+      fuelPerModule <- IO(lines.map(line => calculateFuel(line.toInt)))
+      totalFuel     <- IO(fuelPerModule.map(fuel => fuelOfFuel(fuel, fuel)))
+      _             <- IO(println(totalFuel.sum))
+    } yield ()
 
-  printTotalFuel.unsafeRunSync()
+  fuelFromMass(path).unsafeRunSync()
 
 }

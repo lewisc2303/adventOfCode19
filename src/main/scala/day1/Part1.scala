@@ -3,19 +3,21 @@ package day1
 import cats.effect.IO
 import scala.io.Source
 
-object Day1 extends App {
+object Part1 extends App {
 
   val path: IO[String] = IO(getClass.getClassLoader.getResource("input.txt").getFile)
 
   def calculateFuel(mass: Int) = math.floor(mass / 3).toInt - 2
 
-  val fuels: IO[Unit] =
+  def fuelFromMass(filepath: IO[String]): IO[Int] =
     for {
-      fileString <- path
+      fileString <- filepath
       lines      <- IO(Source.fromFile(fileString).getLines())
       fuel       <- IO(lines.map(line => calculateFuel(line.toInt)))
-    } yield println(fuel.sum)
+    } yield fuel.sum
 
-  fuels.unsafeRunSync()
+  fuelFromMass(path)
+    .flatMap(x => IO(println("Part 1: Total Fuel = " + x)))
+    .unsafeRunAsyncAndForget()
 
 }

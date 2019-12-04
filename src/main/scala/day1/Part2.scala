@@ -8,7 +8,7 @@ import scala.io.Source
 
 object Part2 extends App {
 
-  val path: IO[String] = IO(getClass.getClassLoader.getResource("input.txt").getFile)
+  val path: IO[String] = IO(getClass.getClassLoader.getResource("day1Input.txt").getFile)
 
   @tailrec
   def fuelOfFuel(mass: Int, totalFuel: Int): Int = {

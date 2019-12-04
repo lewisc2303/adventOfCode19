@@ -5,7 +5,7 @@ import scala.io.Source
 
 object Part1 extends App {
 
-  val path: IO[String] = IO(getClass.getClassLoader.getResource("input.txt").getFile)
+  val path: IO[String] = IO(getClass.getClassLoader.getResource("day1Input.txt").getFile)
 
   def calculateFuel(mass: Int) = math.floor(mass / 3).toInt - 2
 

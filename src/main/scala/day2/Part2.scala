@@ -49,11 +49,16 @@ Find the input noun and verb that cause the program to produce the output 196907
   lazy val path = Try(getClass.getClassLoader.getResource("day2Input.txt").getFile)
 
   val TARGET_VALUE = 19690720
+  val MAX_VALUE    = 99
 
   val ADD       = 1
   val MULTIPLY  = 2
   val TERMINATE = 99
 
+  type Noun = Int
+  type Verb = Int
+
+  //this can throw when pointing an updated to something out of list range,  should be Try function and recover failure
   def intCodeComputer(input: List[Int]): Option[Int] = {
     @tailrec
     def go(input: List[Int], toDrop: Int, memory: List[Int]): Option[Int] = {
@@ -77,19 +82,16 @@ Find the input noun and verb that cause the program to produce the output 196907
     go(input, 0, input)
   }
 
-  type Noun = Int
-  type Verb = Int
-
   def getNounAndVerb(input: List[Int]): Option[(Int, Int)] = {
     @tailrec
     def go(noun: Noun, verb: Verb, input: List[Int]): Option[(Int, Int)] = {
       noun match {
-        case 99 =>
+        case MAX_VALUE =>
           println("SOMETHING IS FUK'D")
           None
         case _ =>
           verb match {
-            case 99 => go(noun + 1, 0, input)
+            case MAX_VALUE => go(noun + 1, 0, input)
             case _ =>
               val newInput = input.updated(1, noun).updated(2, verb)
               Try(intCodeComputer(newInput)) match {
@@ -103,7 +105,6 @@ Find the input noun and verb that cause the program to produce the output 196907
           }
       }
     }
-
     go(0, 0, input)
   }
 

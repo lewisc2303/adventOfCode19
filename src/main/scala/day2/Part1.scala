@@ -12,11 +12,9 @@ object Part1 extends App {
   val MULTIPLY  = 2
   val TERMINATE = 99
 
-  val initialListUpdate = getInputList.toList.updated(1, 12).updated(2, 2)
+  val initialListUpdate = getInputList(path).toList.updated(1, 12).updated(2, 2)
 
   def intCodeComputer(input: List[Int]): List[Int] = {
-
-//    val memory: List[Int] = input
 
     @tailrec
     def go(input: List[Int], toDrop: Int, memory: List[Int]): List[Int] = {
@@ -40,7 +38,7 @@ object Part1 extends App {
     go(input, 0, input)
   }
 
-  def getInputList = path match {
+  def getInputList(path: Try[String]) = path match {
     case Success(foundPath) =>
       for {
         file    <- Source.fromFile(foundPath).getLines()

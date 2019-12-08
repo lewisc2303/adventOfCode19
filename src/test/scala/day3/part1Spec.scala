@@ -36,7 +36,6 @@ class part1Spec extends FreeSpec with Matchers {
       val output: List[(Int, Int)] = List((4, -2), (4, -1))
       Part1.pathToCoordinates((4, -2), List.empty, command) shouldBe (output, (4, -1))
     }
-
   }
   "rawDataToCommand" - {
     "should convert a rawData with RIGHT to a Command Type of RIGHT" in {
@@ -48,7 +47,6 @@ class part1Spec extends FreeSpec with Matchers {
       Part1.rawDataToCommand("U100") shouldBe command
     }
   }
-
   "getCoordinatesVisited" - {
     "should create a set of all the coordinates visited example 1" in {
       val wireOne = List("R2", "U1", "L3", "D1")
@@ -62,7 +60,6 @@ class part1Spec extends FreeSpec with Matchers {
       Part1.getCoordinatedVisited(wireOne).toSet should contain theSameElementsAs visited
     }
   }
-
   "findMinimumDistance" - {
     "should find the minimum distance to the intersection of 2 wires" in {
       val wireOne   = List("R8", "U5", "L5", "D3")

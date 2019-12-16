@@ -1,6 +1,6 @@
 package day4
 
-object Part1 extends App {
+object Part1 {
 
   /*
 	It is a six-digit number. ALWAYS TRUE
@@ -9,9 +9,9 @@ object Part1 extends App {
 	Going from left to right, the digits never decrease; they only ever increase or stay the same (like 111123 or 135679).
 	 */
 
-  val digitRange: Seq[Int] = 234208 to 765869
+  lazy val digitRange: Seq[Int] = 234208 to 765869 by 1
 
-  private def toDigitList(digits: Int): Seq[Int] = digits.toString.split("").map(_.toInt).toList
+  def toDigitList(digits: Int): Seq[Int] = digits.toString.split("").map(_.toInt).toList
 
   def twoDigitsAreTheSame(digits: Int): Boolean = {
     case class Accumalator(numberBefore: Int, isTheSame: Boolean)
@@ -27,7 +27,6 @@ object Part1 extends App {
 
   def inAscendingOrder(digits: Int): Boolean = {
     val sortedList = toDigitList(digits).sorted.map(_.toString).mkString.toInt
-
     sortedList == digits
   }
 
